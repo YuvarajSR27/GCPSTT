@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Speech-to-Text Transcription";
+}
+
+<!DOCTYPE html>
+<html>
+<head>    
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Speak Here!!!</h1>
+    <br />
+    <div class="microphone" onclick="toggleRecording()">&#127908;</div>
+    <br />
+    <br />
+    <br />
+    <div id="Response" class="containerone dynamic-border">
+        <div>
+            <p id="recordingStatus"></p>
+            <p id="transcriptionStatus"></p>
+        </div>
+        <br />
+        <div id="transcription"></div>
+    </div>
+
+    <script>
+        let recordingStatus = document.getElementById('recordingStatus');
+        let transcriptionStatus = document.getElementById('transcriptionStatus');
+        let transcriptionDiv = document.getElementById('transcription');
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.lang = 'en-US';
+
+        recognition.onresult = function (event) {
+            const transcript = event.results[0][0].transcript.toLowerCase();
+            console.log('You said:', transcript);
+
+            if (transcript.includes('stop recording')) {
+                toggleRecording();
+            }
+        };
+
+        function toggleRecording() {
+            if (!isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        function startRecording() {
+            $('#Response').css('display', 'inline-block');
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function (stream) {
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = function (event) {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                            console.log('Audio chunk added.');
+                        }
+                    };
+
+                    mediaRecorder.onstop = function () {
+                        console.log('Recording stopped...');
+                        processAudio();
+                    };
+
+                    mediaRecorder.start();                        
+                    recordingStatus.textContent = 'Recording started...';
+
+                    recognition.start();
+                    isRecording = true;
+                    console.log('Listening for voice commands...');
+                })
+                .catch(function (err) {
+                    console.error('Error accessing microphone:', err);
+                });
+        };
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                isRecording = false;
+                recordingStatus.textContent = 'Recording stopped by user.';
+                processAudio();
+            }
+        }
+
+        function processAudio() {
+            if (audioChunks.length === 0) {
+                transcriptionStatus.textContent = 'No audio recorded.';
+                return;
+            }
+
+            let audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            sendAudioToBackend(audioBlob);
+        }
+
+        function sendAudioToBackend(blob) {
+            let formData = new FormData();
+            formData.append('audio', blob);
+
+            fetch('/api/transcribe', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log('Transcription from server:', data);
+                    transcriptionDiv.textContent = 'Transcription: ' + data;
+                    transcriptionStatus.textContent = 'Transcription complete.';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    transcriptionStatus.textContent = 'Error transcribing audio: ' + error;
+                });
+        }
+    </script>
+</body>
+</html>
