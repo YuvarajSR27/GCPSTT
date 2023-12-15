@@ -19,11 +19,18 @@ body {
 
 .containerone.dynamic-border {
     /*display: inline-block;*/
-    border: 2px solid #000; 
-    padding: 10px; 
-    max-width: 100%; 
+    border: 2px solid #ffc107;
+    padding: 10px;
+    max-width: 100%;
     box-sizing: border-box;
-    display:none;
+    display: none;
+}
+
+.MicContent p {
+    font-size: 20px;
+    text-align: left;
+    /*margin-top: 346px;
+    margin-right: 112px;*/
 }
 
 .microphone {
@@ -38,3 +45,55 @@ body {
     border-radius: 50%; */
 }
 
+#AIBackgroundImage {
+    background-image: url('../images/STT2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light {
+    background-color: transparent; 
+    border-bottom: none; 
+    box-shadow: none; 
+}
+
+.footercontent {
+    justify-content: start;
+    margin-left:20px;
+}
+
+#fontanchor {
+    color: #ffc107;
+  /* font-weight: bold;*/
+    font-family: 'Roboto', sans-serif;
+    font-size:20px;
+    margin-left:3px;
+}
+
+#MiddleContent {
+    margin-left: 20px;
+    margin-top:50px;
+}
+
+.PrivacyContent {
+    text-align:left;
+}
+
+.HomeContent p {
+    text-align: left;
+    font-size:25px;
+    margin-bottom:30px;
+    margin-top:60px;
+}
+
+.SubHomeContent p {
+    text-align: left;
+    font-size: 15px;
+    margin-top: 5px;
+}
