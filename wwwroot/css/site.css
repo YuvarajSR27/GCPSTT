@@ -32,19 +32,9 @@ body {
     display: inline-block;
     width: 24px;
     height: 24px;
-    text-align: center;
+    cursor: pointer;
+    /*text-align: center;
     border: 1px solid #ccc; 
-    border-radius: 50%; 
-    cursor: pointer;
-}
-/*
-#microphone {
-    cursor: pointer;
-    fill: #007bff;
-    transition: fill 0.2s;
+    border-radius: 50%; */
 }
 
-#microphone:hover {
-    fill: #0056b3;
-}
-*/
