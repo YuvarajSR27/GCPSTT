@@ -17,12 +17,16 @@ body {
   margin-bottom: 60px;
 }
 
-.containerone.dynamic-border {
+.containerdynamic-border {
     /*display: inline-block;*/
     border: 2px solid #ffc107;
     padding: 10px;
-    max-width: 100%;
+    /*max-width: 100%;*/
+    max-width: 47%;
     box-sizing: border-box;
+}
+
+#Response {
     display: none;
 }
 
