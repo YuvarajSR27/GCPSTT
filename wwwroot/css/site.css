@@ -17,18 +17,28 @@ body {
   margin-bottom: 60px;
 }
 
-.containerdynamic-border {
+/*without popup*/
+/*.containerdynamic-border {*/
     /*display: inline-block;*/
-    border: 2px solid #ffc107;
-    padding: 10px;
+    /*border: 2px solid #ffc107;
+    padding: 10px;*/
     /*max-width: 100%;*/
-    max-width: 47%;
+    /*max-width: 47%;
     box-sizing: border-box;
+}*/
+
+#responseModal {
+    display: none;
+    /*border: 2px solid #ffc107;*/
+    padding: 10px;
+    max-width: 100%;
+    /*max-width: 47%;*/
+    /*box-sizing: border-box;*/
 }
 
-#Response {
+/*#Response {
     display: none;
-}
+}*/
 
 .MicContent p {
     font-size: 20px;
@@ -100,4 +110,35 @@ body {
     text-align: left;
     font-size: 15px;
     margin-top: 5px;
+}
+
+@media (min-width: 576px) {
+    #PopupControl {
+        max-width: 1137px;
+        margin-left: 290px;
+        margin-top: 50px;
+    }
+}
+
+.modal-content {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.modal-header {
+    background-color: goldenrod;
+    color: #fff;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+    color: black;
+    text-align: justify;
 }

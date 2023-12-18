@@ -6,6 +6,7 @@
 <html>
 <head>    
     <link href="~/css/site.css" rel="stylesheet" />
+    @* <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> *@ @* alignment issue - so commented *@
 </head>
 <body>
     <div class="MicContent">
@@ -16,13 +17,35 @@
     <br />
     <br />
     <br />
-    <div id="Response" class="containerdynamic-border">
+    @*  without popup start*@
+    @* <div id="Response" class="containerdynamic-border">
         <div>
             <p id="recordingStatus"></p>
             <p id="transcriptionStatus"></p>
         </div>
         <br />
         <div id="transcription"></div>
+    </div> *@
+    @*  without popup end *@
+     <div class="modal" id="responseModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" id="PopupControl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Speech-to-Text Details</h5>
+                    <button type="button" onclick="stopRecording()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p id="recordingStatus"></p>
+                        <p id="transcriptionStatus"></p>
+                    </div>
+                    <br />
+                    <div id="transcription"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -55,7 +78,8 @@
         }
 
         function startRecording() {
-            $('#Response').css('display', 'inline-block');
+            //$('#Response').css('display', 'inline-block');//without popup
+             $('#responseModal').modal('show');
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then(function (stream) {
                     mediaRecorder = new MediaRecorder(stream);
@@ -85,6 +109,7 @@
         };
 
         function stopRecording() {
+             // $('#responseModal').modal('hide'); //without popup
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
                 isRecording = false;
@@ -123,5 +148,8 @@
                 });
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
