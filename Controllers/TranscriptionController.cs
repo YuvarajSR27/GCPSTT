@@ -10,7 +10,6 @@ namespace TranscriptionAPI.Controllers
     [ApiController]
     public class TranscriptionController : ControllerBase
     {
-
         private async Task<string> TranscribeSpeechAsync(byte[] audioData)
         {
             try
@@ -32,6 +31,7 @@ namespace TranscriptionAPI.Controllers
                 RecognizeResponse response = await speech.RecognizeAsync(config, audio);
 
                 string transcript = "";
+
                 //foreach (var result in response.Results)
                 //{
                 //    foreach (var alternative in result.Alternatives)
@@ -39,6 +39,7 @@ namespace TranscriptionAPI.Controllers
                 //        transcript += alternative.Transcript + "\n";
                 //    }
                 //}
+
                 if (response != null && response.Results != null && response.Results.Count > 0)
                 {
                     foreach (var result in response.Results)
@@ -55,8 +56,11 @@ namespace TranscriptionAPI.Controllers
                             transcript += "No transcription available.";
                         }
                     }
+
                 }
+
                 return transcript;
+
             }
             catch (RpcException ex)
             {
@@ -66,8 +70,7 @@ namespace TranscriptionAPI.Controllers
             {
                 return "Error transcribing audio: " + ex.Message;
             }
-
-            
+       
         }
 
         [HttpPost]
@@ -88,7 +91,9 @@ namespace TranscriptionAPI.Controllers
                     string transcript = await TranscribeSpeechAsync(audioData);
                     return Ok(transcript);
                 }
+
             }
+
             catch (Exception ex)
             {
                 return BadRequest("Error transcribing audio: " + ex.Message);
